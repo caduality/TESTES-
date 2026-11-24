@@ -1,0 +1,6 @@
+{
+  "name": "Juazeiro em Mapa — Distância dos Conjuntos Habitacionais",
+  "description": "Mapa interativo e ferramenta de apuração jornalística sobre a distância dos conjuntos habitacionais de Juazeiro do Norte ao Centro e os impactos no cotidiano dos moradores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
