@@ -237,7 +237,7 @@ export default function App() {
                     <strong>Sincronizar com o mapa:</strong> clique em qualquer linha da tabela para abrir aquele residencial no mapa.
                   </li>
                   <li>
-                    <strong>Buscar, ordenar e baixar:</strong> filtre pelo nome, clique nas colunas (<em>Casas</em>, <em>Valor contratado</em>, <em>Média / casa</em>) para ordenar ou clique em <em>Baixar CSV</em>.
+                    <strong>Buscar, ordenar e baixar:</strong> filtre pelo nome, clique nas colunas (<em>Casas</em> e <em>Valor contratado</em>) para ordenar ou clique em <em>Baixar CSV</em>.
                   </li>
                 </ul>
               </div>

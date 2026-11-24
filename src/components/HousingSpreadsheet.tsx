@@ -7,7 +7,7 @@ import {
   HOUSING_COMPLEXES,
 } from '../data/habitacionais';
 
-type SortField = 'name' | 'units' | 'value' | 'perUnit';
+type SortField = 'name' | 'units' | 'value';
 
 interface HousingSpreadsheetProps {
   selectedComplexId: string | null;
@@ -44,7 +44,6 @@ export function HousingSpreadsheet({
         complex: c,
         units: totals.units,
         value: totals.value,
-        perUnit: totals.units > 0 ? totals.value / totals.units : 0,
       };
     }).filter((row) => {
       if (!q) return true;
@@ -61,10 +60,8 @@ export function HousingSpreadsheet({
         diff = a.complex.name.localeCompare(b.complex.name, 'pt-BR');
       } else if (sortField === 'units') {
         diff = a.units - b.units;
-      } else if (sortField === 'value') {
-        diff = a.value - b.value;
       } else {
-        diff = a.perUnit - b.perUnit;
+        diff = a.value - b.value;
       }
       return sortDesc ? -diff : diff;
     });
@@ -88,7 +85,6 @@ export function HousingSpreadsheet({
       'Bairro',
       'Casas (UHs)',
       'Valor contratado (R$)',
-      'Media por casa (R$)',
     ];
     const rows = groupedRows.flatMap((r) => [
       [
@@ -96,7 +92,6 @@ export function HousingSpreadsheet({
         `"${r.complex.neighborhood}"`,
         r.units,
         r.value.toFixed(2),
-        r.perUnit.toFixed(2),
       ].join(','),
       ...r.complex.stages.map((st) =>
         [
@@ -104,7 +99,6 @@ export function HousingSpreadsheet({
           `"${r.complex.neighborhood}"`,
           st.units,
           st.value.toFixed(2),
-          (st.value / st.units).toFixed(2),
         ].join(',')
       ),
     ]);
@@ -184,23 +178,13 @@ export function HousingSpreadsheet({
                   <ArrowDownUp className="w-3 h-3" />
                 </button>
               </th>
-              <th className="py-2.5 px-3 font-semibold text-right">
+              <th className="py-2.5 px-4 font-semibold text-right">
                 <button
                   type="button"
                   onClick={() => handleSort('value')}
                   className="inline-flex items-center gap-1 hover:text-stone-900 cursor-pointer"
                 >
                   Valor contratado
-                  <ArrowDownUp className="w-3 h-3" />
-                </button>
-              </th>
-              <th className="py-2.5 px-4 font-semibold text-right">
-                <button
-                  type="button"
-                  onClick={() => handleSort('perUnit')}
-                  className="inline-flex items-center gap-1 hover:text-stone-900 cursor-pointer"
-                >
-                  Média / casa
                   <ArrowDownUp className="w-3 h-3" />
                 </button>
               </th>
@@ -275,11 +259,8 @@ export function HousingSpreadsheet({
                     <td className="py-2.5 px-3 text-right font-mono-tabular font-semibold text-stone-900 whitespace-nowrap">
                       {formatNumber(row.units)}
                     </td>
-                    <td className="py-2.5 px-3 text-right font-mono-tabular text-stone-900 whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-right font-mono-tabular text-stone-900 whitespace-nowrap">
                       {formatBRL(row.value)}
-                    </td>
-                    <td className="py-2.5 px-4 text-right font-mono-tabular text-stone-600 whitespace-nowrap">
-                      {formatBRL(row.perUnit)}
                     </td>
                   </tr>
 
@@ -293,11 +274,8 @@ export function HousingSpreadsheet({
                         <td className="py-2 px-3 text-right font-mono-tabular text-stone-700 whitespace-nowrap">
                           {formatNumber(st.units)}
                         </td>
-                        <td className="py-2 px-3 text-right font-mono-tabular text-stone-700 whitespace-nowrap">
+                        <td className="py-2 px-4 text-right font-mono-tabular text-stone-700 whitespace-nowrap">
                           {formatBRL(st.value)}
-                        </td>
-                        <td className="py-2 px-4 text-right font-mono-tabular text-stone-500 whitespace-nowrap">
-                          {formatBRL(st.value / st.units)}
                         </td>
                       </tr>
                     ))}
@@ -316,11 +294,8 @@ export function HousingSpreadsheet({
               <td className="py-2.5 px-3 text-right font-mono-tabular whitespace-nowrap">
                 {formatNumber(totals.units)}
               </td>
-              <td className="py-2.5 px-3 text-right font-mono-tabular whitespace-nowrap">
+              <td className="py-2.5 px-4 text-right font-mono-tabular whitespace-nowrap">
                 {formatBRL(totals.value)}
-              </td>
-              <td className="py-2.5 px-4 text-right font-mono-tabular text-stone-700 whitespace-nowrap">
-                {totals.units > 0 ? formatBRL(totals.value / totals.units) : '—'}
               </td>
             </tr>
           </tfoot>
